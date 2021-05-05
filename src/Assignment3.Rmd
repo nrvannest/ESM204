@@ -6,10 +6,25 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+rm(list=ls())
+gc()
+
 knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 library(here)
 
 gas_data <- read.csv(here("data", "HW3_data.csv"))
+```
+
+```{r Plotting gas_data}
+gas_data %>% 
+  ggplot(aes(x = Price_Dollars, y = Q_Low_Gallons)) +
+  geom_point() 
+```
+
+```{r Estimating linear model of gas_data}
+model_low <-lm(Price_Dollars ~ Q_Low_Gallons, data = gas_data)
+model_high <- lm(Price_Dollars ~ Q_High_Gallons, data = gas_data)
 ```
 
