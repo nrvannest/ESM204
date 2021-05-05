@@ -18,13 +18,38 @@ gas_data <- read.csv(here("data", "HW3_data.csv"))
 ```
 
 ```{r Plotting gas_data}
-gas_data %>% 
-  ggplot(aes(x = Price_Dollars, y = Q_Low_Gallons)) +
+plot_low <- gas_data %>% 
+  ggplot(aes(x = Q_Low_Gallons, y = Price_Dollars)) +
+  geom_point() 
+
+plot_high <- gas_data %>% 
+  ggplot(aes(x = Q_High_Gallons, y = Price_Dollars)) +
   geom_point() 
 ```
 
 ```{r Estimating linear model of gas_data}
 model_low <-lm(Price_Dollars ~ Q_Low_Gallons, data = gas_data)
 model_high <- lm(Price_Dollars ~ Q_High_Gallons, data = gas_data)
+
+a_low <- model_low$coefficients[[1]]
+b_low <- model_low$coefficients[[2]]
+
+a_high <- model_high$coefficients[[1]]
+b_high <- model_high$coefficients[[2]]
+```
+
+```{r Estimated price curve of our plot}
+fitted_low <- a_low + b_low*gas_data$Q_Low_Gallons
+fitted_high <- a_high + b_high*gas_data$Q_High_Gallons
+
+plot_low + geom_line(aes(x = Q_Low_Gallons, y = fitted_low))
+plot_high + geom_line(aes(x = Q_High_Gallons, y = fitted_high))
+
+plot_low + geom_smooth(formula = y ~ x, method = "lm", se = F) #Same as above
+plot_high  + geom_smooth(formula = y ~ x, method = "lm", se = F) #Same as above
+```
+
+```{r Consumer surplus}
+
 ```
 
