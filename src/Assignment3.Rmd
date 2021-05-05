@@ -17,6 +17,10 @@ library(here)
 gas_data <- read.csv(here("data", "HW3_data.csv"))
 ```
 
+#Question 1
+
+MEC = [(19.6 lbs CO_2)/(1 Gal gas)] * [(0.0005 tons CO_2)/(1 lb CO_2)] * [($51/1 ton CO_2)] = $0.50 per gal gas
+
 ```{r Plotting gas_data}
 plot_low <- gas_data %>% 
   ggplot(aes(x = Q_Low_Gallons, y = Price_Dollars)) +
